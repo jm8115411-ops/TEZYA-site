@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tezya — Mockup Responsivo (corrigido)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --maroon:#6b1515;
+      --gold:#d6b25b;
+      --light:#efefef;
+      --card:#f4e6c8;
+      --black-btn:#0b0b0b;
+      --muted:#6f6f6f;
+      --phone-width-desktop:240px;
+      --phone-height-desktop:560px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:var(--light);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      color:#222;
+      padding:24px;
+    }
+    h1{font-family:'Playfair Display',serif}
+
+    /* Layout of mockup phones */
+    .mockup-row{
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+      justify-content:center;
+      flex-wrap:wrap;
+      max-width:1280px;
+      margin:0 auto;
+    }
+
+    .phone{
+      width:var(--phone-width-desktop);
+      height:var(--phone-height-desktop);
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
+      overflow:hidden;
+      border:4px solid transparent;
+      background:#fff;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* make phone content scrollable on small heights and prevent overflow overlap */
+    .phone .screen{flex:1;overflow:auto;padding:0;margin:0}
+
+    .browser{height:28px;background:linear-gradient(90deg,#2b3b7a,#2b3b7a00);display:flex;align-items:center;padding:0 8px;gap:6px;color:#fff;font-size:12px}
+
+    /* -- Splash -- */
+    .splash{background:var(--maroon);color:var(--card);display:flex;flex-direction:column;align-items:center;padding:20px;min-height:100%;position:relative}
+    .splash .logo{font-family:'Playfair Display';font-size:clamp(20px,4vw,36px);color:var(--gold);letter-spacing:2px;text-align:center}
+    .splash .tag{font-size:12px;margin-top:10px;color:var(--card);text-align:center}
+    .splash .actions{width:100%;display:flex;gap:8px;padding:12px;justify-content:center}
+    .splash .actions .btn{flex:1;max-width:120px}
+
+    /* subtle decorative circles using pseudo elements, not absolute in markup */
+    .splash::before,.splash::after{content:"";position:absolute;border-radius:50%;opacity:.95}
+    .splash::before{width:110px;height:110px;left:-40px;top:-40px;background:linear-gradient(180deg,var(--gold),var(--gold));}
+    .splash::after{width:110px;height:110px;right:-40px;bottom:-40px;background:linear-gradient(180deg,var(--gold),var(--gold));}
+
+    /* -- Welcome -- */
+    .welcome{display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,var(--maroon) 0 60%, var(--gold) 60% 100%);}
+    .welcome .upper{flex:1;padding:26px 18px;color:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .welcome .lower{background:var(--gold);padding:14px;color:var(--maroon)}
+    .buttons{display:flex;gap:10px;margin-top:12px}
+
+    /* -- Auth screens -- */
+    .login{background:linear-gradient(180deg,var(--gold) 0 28%, var(--maroon) 28% 100%);height:100%;display:flex;flex-direction:column}
+    .login .form-wrap{padding:16px;flex:1;display:flex;flex-direction:column}
+    .login h2{color:var(--gold);margin-bottom:6px}
+    .input{background:#fff;border-radius:28px;padding:12px 14px;margin:10px 0;border:none;width:100%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+    .enter-btn{display:block;margin-top:8px;background:var(--black-btn);color:#fff;padding:10px;border-radius:30px;text-align:center;font-weight:700;cursor:pointer}
+    .small-muted{font-size:12px;color:var(--muted)}
+
+    /* -- Store -- */
+    .store{background:var(--maroon);height:100%;color:var(--card);display:flex;flex-direction:column}
+    .searchbar{background:var(--gold);padding:10px;display:flex;gap:8px;align-items:center}
+    .searchbar input{flex:1;border-radius:8px;padding:8px;border:none}
+    .categories{display:flex;gap:6px;padding:10px;justify-content:center}
+    .cat{min-width:38px;height:38px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .product-grid{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;overflow:auto}
+    .card{background:var(--card);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:8px}
+    .card .thumb{height:100px;border-radius:6px;background:linear-gradient(180deg,#d9b37a,#c78f4a);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .price{font-weight:700}
+
+    .bottom-nav{position:sticky;bottom:0;left:0;right:0;height:56px;background:#fff;display:flex;align-items:center;justify-content:space-around;border-top-left-radius:12px;border-top-right-radius:12px;padding-bottom:6px}
+    .nav-item{font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center}
+
+    /* Modal and cart */
+    .modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:40}
+    .panel{background:#fff;padding:14px;border-radius:10px;width:360px;max-width:94%}
+    .hidden{display:none}
+
+    /* responsiveness tweaks */
+    @media (max-width:1100px){
+      :root{--phone-width-desktop:220px;--phone-height-desktop:520px}
+      .mockup-row{gap:16px}
+    }
+    @media (max-width:820px){
+      /* single column for phones on small screens */
+      .mockup-row{flex-direction:column;align-items:center;padding-bottom:20px}
+      .phone{width:92%;max-width:420px;height:auto;border-radius:14px}
+      .phone .screen{padding:8px}
+      .product-grid{grid-template-columns:1fr;}
+      .card .thumb{height:140px}
+      /* reduce decorative circles and avoid overlap */
+      .splash::before,.splash::after{display:none}
+      .bottom-nav{position:sticky}
+      .welcome .upper{padding:18px}
+    }
+
+    /* ensure texts never overlap with bottom nav */
+    .phone{padding-bottom:10px}
+    .store, .login, .welcome, .splash{padding-bottom:56px}
+
+    /* small screens: make buttons touch-friendly */
+    @media (max-width:420px){
+      .btn{padding:12px 14px;border-radius:12px}
+      .input{padding:12px}
+      .enter-btn{padding:12px}
+    }
+
+    /* small helper classes */
+    .btn{padding:8px 12px;border-radius:20px;border:none;font-weight:600;cursor:pointer}
+    .btn.enter{background:var(--maroon);color:var(--card)}
+    .btn.signup{background:#000;color:#fff}
+    .muted{color:var(--muted);font-size:13px}
+    .success{background:#e6f7ea;border-left:4px solid #2ca04a;padding:8px;border-radius:6px}
+
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;font-family:'Playfair Display';color:var(--maroon);background:var(--gold);padding:8px 18px;border-radius:20px;max-width:760px;margin:0 auto 18px;">Tezya — Demo (responsivo, mantendo o visual)</h1>
+
+  <div class="mockup-row" id="screens">
+
+    <!-- Screen 1: Splash -->
+    <div class="phone" data-screen="splash">
+      <div class="browser"></div>
+      <div class="screen splash">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:8px">
+          <div class="logo">TZ<br><span style="font-size:14px;color:var(--card);letter-spacing:1px">TEZYA</span></div>
+          <div class="tag">SUA PEÇA SUA HISTÓRIA</div>
+        </div>
+
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:8px">
+          <p style="text-align:center;max-width:200px;font-size:13px;line-height:1.2;color:var(--card)">Moda consciente, criativa e com impacto positivo no planeta.</p>
+        </div>
+
+        <div class="actions" style="padding-bottom:12px">
+          <button class="btn enter" onclick="navigate('welcome')">Começar</button>
+          <button class="btn signup" onclick="navigate('store')">Pular</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Welcome -->
+    <div class="phone" data-screen="welcome" style="display:none">
+      <div class="browser"></div>
+      <div class="screen welcome">
+        <div class="upper">
+          <div style="font-size:18px;color:var(--card);">TEZYA</div>
+          <div style="margin-top:12px;font-size:13px;opacity:0.95;text-align:center;max-width:220px">SUA PEÇA SUA HISTÓRIA</div>
+        </div>
+        <div class="lower">
+          <h3 style="font-family:'Playfair Display';margin:0">BEM-VINDO</h3>
+          <p style="font-size:12px;line-height:1.2;margin-top:6px">Nosso app conecta você a peças feitas com materiais biodegradáveis e sustentáveis.</p>
+          <div class="buttons" style="margin-top:10px">
+            <button class="btn enter" onclick="navigate('login')">Entrar</button>
+            <button class="btn signup" onclick="navigate('register')">Cadastre-se</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Login -->
+    <div class="phone" data-screen="login" style="display:none">
+      <div class="browser"></div>
+      <div class="screen login">
+        <div style="padding:12px;background:var(--gold);display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <h2 style="margin:0">Entrar</h2>
+            <div class="small-muted">Acesse sua conta</div>
+          </div>
+          <div id="loggedAs" style="font-size:12px"></div>
+        </div>
+        <div class="form-wrap">
+          <input id="login-user" class="input" placeholder="Nome de Usuário" />
+          <input id="login-pass" class="input" placeholder="Senha" type="password" />
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+            <a class="small-muted" style="font-size:12px;cursor:pointer" onclick="forgot()">Esqueceu a senha?</a>
+            <button class="btn signup" onclick="navigate('store')">Voltar</button>
+          </div>
+          <div class="enter-btn" style="margin-top:12px" onclick="doLogin()">ENTRAR</div>
+          <div style="margin-top:10px;font-size:13px">ou <a href="#" onclick="navigate('register');return false;">crie uma conta</a></div>
+          <div id="login-msg" style="margin-top:10px;color:#900"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Register -->
+    <div class="phone" data-screen="register" style="display:none">
+      <div class="browser"></div>
+      <div class="screen login">
+        <div style="padding:12px;background:var(--gold)">
+          <h2 style="margin:0">Cadastre-se</h2>
+          <div class="small-muted">Crie sua conta — será salvo localmente</div>
+        </div>
+        <div class="form-wrap">
+          <input id="reg-user" class="input" placeholder="Nome de Usuário" />
+          <input id="reg-email" class="input" placeholder="Email" />
+          <input id="reg-pass" class="input" placeholder="Senha (mín 4 chars)" type="password" />
+          <div class="enter-btn" style="margin-top:8px" onclick="doRegister()">CADASTRAR</div>
+          <div style="margin-top:8px;font-size:13px">Já tem conta? <a href="#" onclick="navigate('login');return false;">Entrar</a></div>
+          <div id="reg-msg" style="margin-top:10px;color:#090"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: Store -->
+    <div class="phone" data-screen="store" style="display:none">
+      <div class="browser"></div>
+      <div class="screen store">
+        <div class="searchbar">
+          <input id="search" placeholder="Buscar na Tezya" oninput="filterProducts()" />
+          <div style="display:flex;align-items:center;gap:8px"><div id="cart-count">🛒 0</div><button class="btn enter" onclick="showCart()">Carrinho</button></div>
+        </div>
+        <div class="categories">
+          <div class="cat" onclick="filterCategory('all')">👚</div>
+          <div class="cat" onclick="filterCategory('dresses')">👗</div>
+          <div class="cat" onclick="filterCategory('bags')">👜</div>
+          <div class="cat" onclick="filterCategory('shirts')">👔</div>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <div style="height:10px"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal product -->
+  <div id="modal" class="modal hidden">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong id="m-title">Produto</strong><button onclick="closeModal()">✕</button></div>
+      <div id="m-desc" style="margin-top:8px;font-size:13px">Descrição do produto aqui.</div>
+      <div style="margin-top:12px;font-weight:700" id="m-price">$0,00</div>
+      <div style="display:flex;gap:8px;margin-top:10px"><button class="btn enter" onclick="addToCart()">Adicionar ao carrinho</button><button class="btn signup" onclick="closeModal()">Fechar</button></div>
+    </div>
+  </div>
+
+  <!-- Cart modal -->
+  <div id="cartModal" class="modal hidden">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong>Seu Carrinho</strong><button onclick="closeCart()">✕</button></div>
+      <div id="cartList" style="margin-top:8px"></div>
+      <div style="margin-top:12px;text-align:right"><strong>Total: <span id="cartTotal">$0,00</span></strong></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <input id="checkout-name" class="input" placeholder="Nome completo" />
+        <input id="checkout-address" class="input" placeholder="Endereço de entrega" />
+        <input id="checkout-card" class="input" placeholder="Cartão (número simulado)" />
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn enter" onclick="proceedCheckout()">Pagar</button>
+          <button class="btn signup" onclick="closeCart()">Cancelar</button>
+        </div>
+      </div>
+      <div id="checkoutMsg" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <script>
+    // Data
+    const PRODUCTS = [
+      {id:1,title:'Macaquinho de linho orgânico',category:'dresses',price:25.99,desc:'Terno de linho com alta qualidade e conforto.', img:"c85d3452-64d5-49c7-b8ff-5e511265e361.jpg"},
+      {id:2,title:'Vestido de fibra de bambu',category:'dresses',price:50.00,desc:'vestido sustentável.', img:'Imagem do WhatsApp de 2025-10-18 à(s) 00.03.28_b8aa2b88.jpg'},
+      {id:3,title:'Vestido de material sustentável',category:'dresses',price:30.00,desc:'Peça feita com materiais reciclados e acabamento de baixo impacto.', img:'7280f52f-7995-4344-bbb8-bc698babb6c8.jpg'},
+      {id:4,title:'Camisa feminina de fibra de algodão',category:'shirts',price:40.00,desc:'Camisa feminina produzida com algodão de cultivo responsável.', img:'e9b04e33-60ad-42df-a300-71ff74bd271d.jpg '}
+    ];
+
+    // State & storage helpers
+    let state = {screen:'splash',filter:'all',cart:[]};
+    const screens = document.querySelectorAll('[data-screen]');
+
+    function saveCartToStorage(){ const user = currentUser(); const key = user? 'cart_'+user : 'cart_guest'; localStorage.setItem(key, JSON.stringify(state.cart)); updateCartUI(); }
+    function loadCartFromStorage(){ const user = currentUser(); const key = user? 'cart_'+user : 'cart_guest'; state.cart = JSON.parse(localStorage.getItem(key)||'[]'); updateCartUI(); }
+    function currentUser(){ return localStorage.getItem('tezya_user') }
+
+    // Navigation
+    function navigate(screen){ state.screen = screen; screens.forEach(s=>s.style.display = s.getAttribute('data-screen')===screen? 'flex':'none'); if(screen==='store') renderProducts(); }
+    // initial
+    navigate('splash');
+
+    // Render products (shows image thumbnails)
+    function renderProducts(){ const grid = document.getElementById('product-grid'); grid.innerHTML = ''; const q = document.getElementById('search')? document.getElementById('search').value.toLowerCase():''; const list = PRODUCTS.filter(p=> (state.filter==='all'||p.category===state.filter) && (p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q))); list.forEach(p=>{ const el=document.createElement('div'); el.className='card'; el.innerHTML = `
+      <div class="thumb"><img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:13px">${p.title}</div><div class="price">$${p.price.toFixed(2)}</div></div>
+      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn enter" onclick='openProduct(${p.id})'>Ver</button><button class="btn signup" onclick='quickAdd(${p.id})'>+ Carrinho</button></div>`; grid.appendChild(el); }); updateCartUI(); }
+
+    function filterProducts(){ renderProducts(); }
+    function filterCategory(cat){ state.filter = cat; renderProducts(); }
+
+    // product modal
+    let currentProduct = null;
+    function openProduct(id){ currentProduct = PRODUCTS.find(p=>p.id===id); document.getElementById('m-title').innerText = currentProduct.title; document.getElementById('m-desc').innerText = currentProduct.desc; document.getElementById('m-price').innerText = '$'+currentProduct.price.toFixed(2); document.getElementById('modal').classList.remove('hidden'); }
+    function closeModal(){ document.getElementById('modal').classList.add('hidden'); }
+
+    // cart
+    function quickAdd(id){ const p = PRODUCTS.find(x=>x.id===id); addItemToCart(p); }
+    function addToCart(){ if(!currentProduct){ closeModal(); return; } addItemToCart(currentProduct); closeModal(); }
+    function addItemToCart(p){ const item = state.cart.find(i=>i.id===p.id); if(item) item.qty++; else state.cart.push({id:p.id,title:p.title,price:p.price,qty:1}); saveCartToStorage(); }
+    function updateCartUI(){ document.getElementById('cart-count').innerText = '🛒 '+ state.cart.reduce((s,i)=>s+i.qty,0); document.getElementById('cartTotal').innerText = '$'+ state.cart.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2); }
+    function showCart(){ renderCart(); document.getElementById('cartModal').classList.remove('hidden'); }
+    function closeCart(){ document.getElementById('cartModal').classList.add('hidden'); document.getElementById('checkoutMsg').innerText=''; }
+    function renderCart(){ const list=document.getElementById('cartList'); list.innerHTML=''; if(state.cart.length===0){ list.innerHTML='<div class="muted">Seu carrinho está vazio</div>'; } else { state.cart.forEach(i=>{ const row=document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.marginTop='6px'; row.innerHTML = `<div>${i.title} x${i.qty}</div><div>$${(i.price*i.qty).toFixed(2)}</div>`; list.appendChild(row); }); } updateCartUI(); }
+
+    // checkout
+    function proceedCheckout(){ const user = currentUser(); if(!user){ document.getElementById('checkoutMsg').innerHTML = '<div class="muted">Você precisa estar logado para finalizar a compra.</div>'; navigate('login'); return; }
+      const name = document.getElementById('checkout-name').value.trim(); const address = document.getElementById('checkout-address').value.trim(); const card = document.getElementById('checkout-card').value.trim(); if(!name||!address||!card){ document.getElementById('checkoutMsg').innerHTML = '<div class="muted">Preencha todos os campos de pagamento.</div>'; return; }
+      if(state.cart.length===0){ document.getElementById('checkoutMsg').innerHTML = '<div class="muted">Carrinho vazio.</div>'; return; }
+      const order = { id:'ORD-'+Date.now(), user, items:state.cart.map(i=>({id:i.id,title:i.title,qty:i.qty,price:i.price})), total: state.cart.reduce((s,i)=>s+i.qty*i.price,0), date: new Date().toISOString(), address, name };
+      const ordersKey = 'orders_'+user; const prev = JSON.parse(localStorage.getItem(ordersKey)||'[]'); prev.unshift(order); localStorage.setItem(ordersKey, JSON.stringify(prev));
+      state.cart = []; saveCartToStorage(); renderCart(); document.getElementById('checkoutMsg').innerHTML = '<div class="success">Pagamento simulado realizado — pedido registrado! ID: '+order.id+'</div>';
+      document.getElementById('checkout-name').value=''; document.getElementById('checkout-address').value=''; document.getElementById('checkout-card').value='';
+    }
+
+    // orders & auth
+    function renderOrders(){ /* kept minimal for now */ }
+    function showLoggedAs(){ const logged = currentUser(); document.getElementById('loggedAs').innerText = logged? 'Logado: '+logged : ''; }
+    function doLogin(){ const u=document.getElementById('login-user').value.trim(); const p=document.getElementById('login-pass').value.trim(); if(!u||!p){ document.getElementById('login-msg').innerText = 'Preencha usuário e senha (simulação).'; return; }
+      const users = JSON.parse(localStorage.getItem('tezya_users')||'{}'); if(!users[u] || users[u].pass !== p){ document.getElementById('login-msg').innerText = 'Usuário ou senha inválidos.'; return; }
+      localStorage.setItem('tezya_user', u); document.getElementById('login-msg').innerText = 'Logado!'; mergeGuestCartToUser(); loadCartFromStorage(); navigate('store'); }
+    function doRegister(){ const u=document.getElementById('reg-user').value.trim(); const e=document.getElementById('reg-email').value.trim(); const p=document.getElementById('reg-pass').value.trim(); if(!u||!e||p.length<4){ document.getElementById('reg-msg').innerText = 'Preencha corretamente (senha mínimo 4 chars).'; return; }
+      const users = JSON.parse(localStorage.getItem('tezya_users')||'{}'); if(users[u]){ document.getElementById('reg-msg').innerText = 'Nome de usuário já existe.'; return; }
+      users[u] = {email:e,pass:p}; localStorage.setItem('tezya_users', JSON.stringify(users)); localStorage.setItem('tezya_user', u); document.getElementById('reg-msg').innerText = 'Cadastro OK!'; mergeGuestCartToUser(); loadCartFromStorage(); navigate('store'); }
+    function logout(){ localStorage.removeItem('tezya_user'); state.cart = JSON.parse(localStorage.getItem('cart_guest')||'[]'); saveCartToStorage(); navigate('store'); }
+    function forgot(){ alert('Simulação: instruções de recuperação enviadas.'); }
+    function mergeGuestCartToUser(){ const user=currentUser(); if(!user) return; const guest = JSON.parse(localStorage.getItem('cart_guest')||'[]'); const userKey = 'cart_'+user; const existing = JSON.parse(localStorage.getItem(userKey)||'[]'); guest.forEach(g=>{ const found = existing.find(x=>x.id===g.id); if(found) found.qty+=g.qty; else existing.push(g); }); localStorage.setItem(userKey, JSON.stringify(existing)); localStorage.removeItem('cart_guest'); }
+
+    // storage init
+    function saveCartToStorage(){ const user = currentUser(); const key = user? 'cart_'+user : 'cart_guest'; localStorage.setItem(key, JSON.stringify(state.cart)); updateCartUI(); }
+    function loadCartFromStorage(){ const user = currentUser(); const key = user? 'cart_'+user : 'cart_guest'; state.cart = JSON.parse(localStorage.getItem(key)||'[]'); updateCartUI(); }
+    loadCartFromStorage(); renderProducts();
+
+    // expose functions
+    window.navigate = navigate; window.openProduct = openProduct; window.closeModal = closeModal; window.quickAdd = quickAdd; window.addToCart = addToCart; window.showCart = showCart; window.closeCart = closeCart; window.doLogin = doLogin; window.doRegister = doRegister; window.logout = logout; window.forgot = forgot; window.filterCategory = filterCategory; window.filterProducts = filterProducts; window.proceedCheckout = proceedCheckout; window.showLoggedAs = showLoggedAs;
+  </script>
+</body>
+</html>
